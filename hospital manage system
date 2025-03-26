@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+struct Patient {
+    int patient_id;
+    char name[50];
+    int age;
+    char disease[50];
+};
+int main() {
+    struct Patient patients[10];  
+    int patient_count = 0;
+    int choice;
+    while (1) {
+        printf("Hospital Management System\n");
+        printf("1.Add Patient\n");
+        printf("2.Display Patients\n");
+        printf("3.Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        if (choice == 1) {
+            if (patient_count<10) {
+                struct Patient new_patient;
+                new_patient.patient_id=patient_count + 1;
+                printf("\nEnter Patient Name: ");
+                getchar(); 
+                fgets(new_patient.name, sizeof(new_patient.name), stdin);
+                new_patient.name[strcspn(new_patient.name, "\n")] = '\0';
+                printf("Enter Age: ");
+                scanf("%d", &new_patient.age);
+                printf("Enter Disease: ");
+                getchar();
+                fgets(new_patient.disease, sizeof(new_patient.disease), stdin);
+                new_patient.disease[strcspn(new_patient.disease, "\n")] ='\0'; 
+                patients[patient_count] = new_patient;
+                patient_count++;
+                printf("Patient added successfully!\n");
+            } else {
+                printf("Patient limit reached!\n");
+            }
+        }
+        else if (choice == 2) {
+            if (patient_count == 0) {
+                printf("No patients to display.\n");
+            } else {
+                printf("\n=== Patient List ===\n");
+                for (int i = 0; i < patient_count; i++) {
+                    printf("\nPatient ID: %d\n", patients[i].patient_id);
+                    printf("Name: %s\n", patients[i].name);
+                    printf("Age: %d\n", patients[i].age);
+                    printf("Disease: %s\n", patients[i].disease);
+                }
+            }
+        }
+        else if (choice == 3) {
+            printf("Exiting the system...\n");
+            break;
+        } else {
+            printf("Invalid choice! Please try again.\n");
+        }
+    }
+    return 0;
+}
